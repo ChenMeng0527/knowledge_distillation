@@ -11,6 +11,9 @@ config = KDConfig()
 
 
 class KDdataset(Dataset):
+    '''
+    将数据源转为bert/cnn格式输入数据
+    '''
     def __init__(self, data_path):
         label2idx = config.textcnn_config.label2idx
         word2idx = config.textcnn_config.word2idx
@@ -24,10 +27,10 @@ class KDdataset(Dataset):
                 texts.append(list(text))
                 self.labels.append(label2idx[label])
 
-        # 转成bert需要格式
+        # 1: 转成bert需要格式
         self.input_ids, self.token_type_ids, self.attention_mask = encode_fn(texts)
 
-        # 转成textcnn需要格式
+        # 2: 转成textcnn需要格式
         self.cnn_ids = []
         for text in texts:
             words = [word2idx.get(w, 1) for w in text[:config.base_config.max_seq_len]]
@@ -42,7 +45,6 @@ class KDdataset(Dataset):
         return len(self.labels)
 
     def __getitem__(self, idx):
-        return self.cnn_ids[idx], self.labels[idx], self.input_ids[idx], \
-               self.token_type_ids[idx], self.attention_mask[idx]
+        return self.cnn_ids[idx], self.labels[idx], self.input_ids[idx], self.token_type_ids[idx], self.attention_mask[idx]
 
 

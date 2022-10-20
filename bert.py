@@ -4,7 +4,7 @@
 bert输出 + dropout + FC
 '''
 
-import torch
+
 import torch.nn as nn
 from transformers import BertModel
 
