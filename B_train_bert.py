@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+'''
+训练bert
+'''
 
 import torch
 import torch.nn as nn
@@ -51,17 +54,19 @@ def train():
     # log
     logger = get_logger(config.log_path, 'train_bert')
 
-    # bert模型
-    model = Bert(config)
-    model.to(device)
-    model.train()
-
     # 对train / dev数据集进行encode
     train_dataset = BertDataSet(config.base_config.train_data_path)
     dev_dataset = BertDataSet(config.base_config.dev_data_path)
     # 调用DataLoader加载tensor
     train_dataloader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True)
     dev_dataloader = DataLoader(dev_dataset, batch_size=config.batch_size, shuffle=False)
+
+
+    # bert模型
+    model = Bert(config)
+    model.to(device)
+    model.train()
+
 
     # Adam训练器
     optimizer = AdamW(model.parameters(), lr=config.lr)

@@ -11,7 +11,8 @@ train_data_path = base_config.train_data_path
 
 def preprocess_data():
     '''
-    1：将train所有文本进行word编码，前面加上 "<PAD>", "<UNK>"
+    1：将train所有文本进行word编码，总word前面加上 "<PAD>", "<UNK>"
+        {"<PAD>": 0, "<UNK>": 1, "，": 2, "？": 3, "的": 4, "么": 5, "一": 6, "国": 7, "！": 8, "是": 9,
     2：将label进行编码
     '''
     if not os.path.exists("./model"):

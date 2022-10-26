@@ -11,6 +11,7 @@ class TextCNNConfig(object):
     """配置参数"""
     def __init__(self):
         self.base_config = BaseConfig()
+        # index
         self.label2idx = load_json(self.base_config.label2idx_path)
         self.word2idx = load_json(self.base_config.word2idx_path)
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')   # 设备

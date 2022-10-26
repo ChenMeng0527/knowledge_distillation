@@ -19,7 +19,7 @@ class KDdataset(Dataset):
         word2idx = config.textcnn_config.word2idx
         texts = []
         self.labels = []
-        with open(data_path) as f:
+        with open(data_path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = json.loads(line)
                 text = line["sentence"]

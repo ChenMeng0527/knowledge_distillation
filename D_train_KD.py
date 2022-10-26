@@ -84,14 +84,20 @@ def train():
     best_acc = 0.
     for epoch in range(config.epochs):
         for i, batch in enumerate(train_loader):
+
+            # 获取bert/textcnn输入
             cnn_ids, labels, input_ids, token_type_ids, attention_mask = batch[0].to(device), \
                                                                          batch[1].to(device), \
                                                                          batch[2].to(device), \
                                                                          batch[3].to(device), \
                                                                          batch[4].to(device)
             optimizer.zero_grad()
+
+            # textcnn输出
             students_output = textcnn(cnn_ids)
+            # bert输出
             teacher_output = bert(input_ids, token_type_ids, attention_mask)
+            # 求loss
             loss = loss_fn_kd(students_output, labels, teacher_output, config.T, config.alpha)
             loss.backward()
             optimizer.step()
@@ -113,6 +119,8 @@ def train():
             torch.save(textcnn.state_dict(), config.model_path)
             best_acc = acc
 
+
+    # ----对测试数据进行验证-------
     logger.info("start testing ......")
     test_loader = DataLoader(KDdataset(config.base_config.test_data_path), batch_size=config.batch_size, shuffle=False)
     best_model = TextCNN(config.textcnn_config)

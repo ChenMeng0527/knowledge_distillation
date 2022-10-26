@@ -25,7 +25,7 @@ class CnnDataSet(Dataset):
             word2idx = config.word2idx
             self.texts = []
             self.labels = []
-            with open(data_path) as f:
+            with open(data_path,'r',encoding='utf-8') as f:
                 for line in f:
                     line = json.loads(line)
                     # 取出限定字数的words

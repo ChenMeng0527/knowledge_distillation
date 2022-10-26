@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+'''
+bert中配置
+'''
 
 import torch
 from utils import *
@@ -9,8 +12,8 @@ from config.base_config import BaseConfig
 class BertConfig():
     def __init__(self):
         self.base_config = BaseConfig()
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.label2idx = load_json(self.base_config.label2idx_path)
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.class_num = len(self.label2idx)
         self.epochs = 4
         self.lr = 2e-5
